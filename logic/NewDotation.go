@@ -7,9 +7,9 @@ import (
 )
 
 //NewUser - Créer un nouveau client
-func NewUser(prenom, nom, service string) (Models.Client, error) {
+func NewUser(prenom, nom, service string) (Models.User, error) {
 
-	client := Models.Client{
+	client := Models.User{
 		Prenom:  prenom,
 		Nom:     nom,
 		Service: service,
@@ -18,7 +18,7 @@ func NewUser(prenom, nom, service string) (Models.Client, error) {
 	return client, nil
 }
 
-func valideService(c *Models.Client) {
+func valideService(c *Models.User) {
 	if !strings.HasSuffix(c.Service, "Service ") {
 		c.Service = "Service " + c.Service
 	}

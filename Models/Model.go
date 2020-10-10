@@ -4,12 +4,13 @@ import (
 	"time"
 )
 
-type Client struct {
+type User struct {
 	Nom        string
 	Prenom     string
 	Service    string
 	Ordinateur Ordinateur
 	Materiel   []Materiel
+	pwd        string
 }
 
 type Dotation struct {

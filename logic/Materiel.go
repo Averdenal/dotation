@@ -23,6 +23,6 @@ func CreatedMateriel(tarif float32, nbSerial, nom, model string) (Models.Materie
 }
 
 //AddMateriel Add Materiel au Client
-func AddMateriel(c *Models.Client, m Models.Materiel) {
+func AddMateriel(c *Models.User, m Models.Materiel) {
 	c.Materiel = append(c.Materiel, m)
 }

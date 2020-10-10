@@ -6,8 +6,9 @@ import (
 
 	"github.com/Averdenal/Dotation/Models"
 )
-//AddOrdinateur ajoute un ordianteur au client
-func AddOrdinateur(c *Models.Client, nameOrdinateur, codeExpress, os, nbserial, modelOrdinateur string, tarif float32) {
+
+//AddOrdinateur ajoute un ordi au client
+func AddOrdinateur(c *Models.User, nameOrdinateur, codeExpress, os, nbserial, modelOrdinateur string, tarif float32) {
 	valideNameOrdinateur(&nameOrdinateur)
 	oridnateur := Models.Ordinateur{
 		Name:        nameOrdinateur,
