@@ -10,8 +10,8 @@ import (
 func CreatedMateriel(tarif float32, nbSerial, nom, model string) (Models.Materiel, error) {
 	materiel := Models.Materiel{
 		Cat: Models.Cat{
-			Model: model,
-			Name:  nom,
+			Models: model,
+			Name:   nom,
 		},
 		Tarif:    tarif,
 		NbSerial: nbSerial,
@@ -20,9 +20,4 @@ func CreatedMateriel(tarif float32, nbSerial, nom, model string) (Models.Materie
 		},
 	}
 	return materiel, nil
-}
-
-//AddMateriel Add Materiel au Client
-func AddMateriel(c *Models.User, m Models.Materiel) {
-	c.Materiel = append(c.Materiel, m)
 }

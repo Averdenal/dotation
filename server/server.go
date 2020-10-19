@@ -12,20 +12,41 @@ func Server() {
 	r.Static("/assets", "./assets")
 
 	r.GET("/", Controller.Home)
-	
-	demandes := r.Group("/Demandes")
+
+	ordinateur := r.Group("/ordinateur")
 	{
-		//vos demandes
-		demandes.GET("/", Controller.DemandeByUser)
-		//Créer une demande
-		demandes.POST("/NewUser", Controller.NewUser)
+		ordinateur.GET("", Controller.GetAllOrdinateur)
+		ordinateur.GET("/:id", Controller.GetByOrdinateur)
+		ordinateur.POST("", Controller.PostOrdinateur)
+		ordinateur.DELETE("/:id", Controller.DeleteOrdinateur)
+		ordinateur.PUT("/:id", Controller.UpdateOrdinateur)
+	}
 
-		demandes.POST("/", Controller.NewDemande)
+	user := r.Group("/user")
+	{
+		user.GET("", Controller.NewUser)
+		user.GET("/:id", Controller.NewUser)
+		user.POST("", Controller.NewUser)
+		user.DELETE("/:id", Controller.NewUser)
+		user.PUT("/:id", Controller.NewUser)
+	}
 
-		demandes.GET("/user/:idUser", Controller.DemandeForUser)
+	materiel := r.Group("/materiels")
+	{
+		materiel.GET("", Controller.NewUser)
+		materiel.GET("/:id", Controller.NewUser)
+		materiel.POST("", Controller.NewUser)
+		materiel.DELETE("/:id", Controller.NewUser)
+		materiel.PUT("/:id", Controller.NewUser)
+	}
 
-		demandes.GET("/Service/:idService", Controller.NewDotation)
-
+	application := r.Group("/materiels")
+	{
+		application.GET("", Controller.NewUser)
+		application.GET("/:id", Controller.NewUser)
+		application.POST("", Controller.NewUser)
+		application.DELETE("/:id", Controller.NewUser)
+		application.PUT("/:id", Controller.NewUser)
 	}
 	r.Run()
 }
