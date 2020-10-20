@@ -1,13 +1,14 @@
 package logic
 
 import (
-	"fmt"
 	"github.com/Averdenal/Dotation/db"
 	"strconv"
 	"time"
 
 	"github.com/Averdenal/Dotation/Models"
 )
+
+var database = db.DbConnnect()
 
 //AddOrdinateur ajoute un ordi au client
 func CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbserial, modelOrdinateur, tarif string) (Models.Ordinateur, error) {
@@ -30,8 +31,9 @@ func CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbserial, modelOrdinateu
 			Date: time.Now(),
 		},
 	}
-	ordinateur.ValideNameOrdinateur()
-	ordinateur.Save()
+	ordinateur.Upper()
+	//database := db.DbConnnect()
+	//database.Save(&ordinateur)
 	return ordinateur, nil
 }
 
@@ -40,9 +42,8 @@ func UpdateOrdinateur(id, nameOrdinateur, codeExpress, os, nbserial, modelOrdina
 	if err != nil {
 		return err
 	}
-	db := db.DbConnnect()
 	o := Models.Ordinateur{}
-	db.First(&o).Where("id = ?", i)
+	database.First(&o).Where("id = ?", i)
 
 	if nameOrdinateur != "" {
 		o.Name = nameOrdinateur
@@ -68,16 +69,13 @@ func UpdateOrdinateur(id, nameOrdinateur, codeExpress, os, nbserial, modelOrdina
 		t, _ := valideTarif(&tarif)
 		o.Tarif = t
 	}
-	fmt.Println(o.Name)
-	fmt.Println(nameOrdinateur)
-	//db.Save(&o)
+	database.Save(&o)
 	return nil
 }
 
 func DeleteOrdianteur(id string) error {
-	db := db.DbConnnect()
 	var o Models.Ordinateur
-	db.Where("id = ?", id).Delete(&o)
+	database.Where("id = ?", id).Delete(&o)
 	return nil
 }
 

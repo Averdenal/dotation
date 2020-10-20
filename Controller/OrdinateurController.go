@@ -4,7 +4,6 @@ import (
 	"github.com/Averdenal/Dotation/db"
 	"github.com/Averdenal/Dotation/logic"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 func PostOrdinateur(c *gin.Context) {
@@ -15,7 +14,7 @@ func PostOrdinateur(c *gin.Context) {
 	modelOrdianteur := c.PostForm("modelOrdianteur")
 	tarif := c.PostForm("tarif")
 
-	o := logic.CreatedOrdinateur(nameOrdianteur, codeExpress, os, nbSerial, modelOrdianteur, tarif)
+	o, _ := logic.CreatedOrdinateur(nameOrdianteur, codeExpress, os, nbSerial, modelOrdianteur, tarif)
 	db := db.DbConnnect()
 	db.Create(&o)
 	c.JSON(200, o)
@@ -42,15 +41,8 @@ func UpdateOrdinateur(c *gin.Context) {
 func DeleteOrdinateur(c *gin.Context) {
 	id := c.Param("id")
 
-	i, err := strconv.Atoi(id)
+	err := logic.DeleteOrdianteur(id)
 	if err != nil {
-		c.JSON(503, gin.H{
-			"err": err,
-		})
-		return
-	}
-	err1 := logic.DeleteOrdianteur(i)
-	if err1 != nil {
 		c.JSON(503, gin.H{
 			"err": err,
 		})
@@ -63,6 +55,6 @@ func GetAllOrdinateur(c *gin.Context) {
 
 }
 
-func GetByOrdinateur(c *gin.Context) {
+func GetOrdinateur(c *gin.Context) {
 
 }

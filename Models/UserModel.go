@@ -1,7 +1,6 @@
 package Models
 
 import (
-	"github.com/Averdenal/Dotation/db"
 	"gorm.io/gorm"
 )
 
@@ -13,11 +12,6 @@ type User struct {
 	Ordinateur []Ordinateur `gorm:"foreignKey:UserRefer"`
 	Materiel   []Materiel   `gorm:"foreignKey:UserRefer"`
 	pwd        string
-}
-
-func (r *User) Save() {
-	db := db.DbConnnect()
-	db.Save(&r)
 }
 
 func (r *User) AddOrdinateur(o *Ordinateur) {
