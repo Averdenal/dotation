@@ -19,11 +19,11 @@ type Ordinateur struct {
 	Applications []Application `gorm:"foreignKey:OrdinateurRefer"`
 }
 
-func (r *Ordinateur) AddApplication(a *Application) {
-	r.Applications = append(r.Applications, *a)
+func (o *Ordinateur) AddApplication(a *Application) {
+	o.Applications = append(o.Applications, *a)
 }
 
-func (r *Ordinateur) Upper() {
-	r.Name = strings.TrimSpace(strings.ToUpper(r.Name))
-	r.Os = strings.TrimSpace(strings.ToUpper(r.Os))
+func (o *Ordinateur) Upper() {
+	o.Name = strings.TrimSpace(strings.ToUpper(o.Name))
+	o.Os = strings.TrimSpace(strings.ToUpper(o.Os))
 }

@@ -1,14 +1,12 @@
 package logic
 
 import (
-	"github.com/Averdenal/Dotation/db"
+	"fmt"
 	"strconv"
 	"time"
 
 	"github.com/Averdenal/Dotation/Models"
 )
-
-var database = db.DbConnnect()
 
 //AddOrdinateur ajoute un ordi au client
 func CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbserial, modelOrdinateur, tarif string) (Models.Ordinateur, error) {
@@ -16,6 +14,7 @@ func CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbserial, modelOrdinateu
 	if err != nil {
 		return Models.Ordinateur{}, err
 	}
+	fmt.Println(nameOrdinateur)
 	ordinateur := Models.Ordinateur{
 		Name:        nameOrdinateur,
 		CodeExpress: codeExpress,
@@ -31,19 +30,10 @@ func CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbserial, modelOrdinateu
 			Date: time.Now(),
 		},
 	}
-	ordinateur.Upper()
-	//database := db.DbConnnect()
-	//database.Save(&ordinateur)
 	return ordinateur, nil
 }
 
-func UpdateOrdinateur(id, nameOrdinateur, codeExpress, os, nbserial, modelOrdinateur, tarif string) error {
-	i, err := strconv.Atoi(id)
-	if err != nil {
-		return err
-	}
-	o := Models.Ordinateur{}
-	database.First(&o).Where("id = ?", i)
+func UpdateOrdinateur(o *Models.Ordinateur, nameOrdinateur, codeExpress, os, nbserial, modelOrdinateur, tarif string) error {
 
 	if nameOrdinateur != "" {
 		o.Name = nameOrdinateur
@@ -69,13 +59,7 @@ func UpdateOrdinateur(id, nameOrdinateur, codeExpress, os, nbserial, modelOrdina
 		t, _ := valideTarif(&tarif)
 		o.Tarif = t
 	}
-	database.Save(&o)
-	return nil
-}
 
-func DeleteOrdianteur(id string) error {
-	var o Models.Ordinateur
-	database.Where("id = ?", id).Delete(&o)
 	return nil
 }
 

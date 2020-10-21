@@ -2,25 +2,44 @@ package Models
 
 import "fmt"
 
-func FindById(id int) (o Ordinateur) {
-	database.First(&o, id)
-	return
+func (o *Ordinateur) FindById(id string) error {
+	database.First(o, id)
+	err := database.Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
-func FindAll() (o []Ordinateur, err error) {
+func FindAllOordinateur() (o []Ordinateur, err error) {
 	result := database.Find(&o)
 	fmt.Println(result)
 	err = result.Error
 	return o, err
 }
-func FindByName(n string) (o Ordinateur) {
+func (o *Ordinateur) FindByName(n string) error {
 	database.Where("name = ?", n).First(&o)
-	return
+	err := database.Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
-func (r *Ordinateur) Saver() {
-	database.Save(*r)
+func (o *Ordinateur) Saver() error {
+	o.Upper()
+	database.Save(o)
+	err := database.Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
-func (r *Ordinateur) Delete() {
-	database.Delete(&r)
+func (o *Ordinateur) Delete() error {
+	database.Delete(&o)
+	err := database.Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
