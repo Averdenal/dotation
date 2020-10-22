@@ -1,8 +1,9 @@
 package Models
 
 import (
-	"gorm.io/gorm"
 	"strings"
+
+	"gorm.io/gorm"
 )
 
 type Ordinateur struct {
