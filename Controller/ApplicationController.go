@@ -2,6 +2,7 @@ package Controller
 
 import (
 	"github.com/Averdenal/Dotation/Models"
+	"github.com/Averdenal/Dotation/logic"
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,7 +30,17 @@ func GetApplication(c *gin.Context) {
 }
 
 func PostApplication(c *gin.Context) {
+	nom := c.PostForm("name")
+	version := c.PostForm("version")
 
+	app, _ = logic.CreatedApplication(nom, version)
+	err := app.Saver()
+	if err != nil {
+		c.JSON(503, err)
+		return
+	}
+	c.JSON(202, app)
+	return
 }
 
 func DeleteApplication(c *gin.Context) {
@@ -57,5 +68,14 @@ func UpdateApplication(c *gin.Context) {
 	err := app.FindById(id)
 	if err != nil {
 		c.JSON(404, err)
+		return
 	}
+	app.Update(nom, version)
+	errsaver := app.Saver()
+	if errsaver != nil {
+		c.JSON(503, errsaver)
+		return
+	}
+	c.JSON(202, app)
+
 }

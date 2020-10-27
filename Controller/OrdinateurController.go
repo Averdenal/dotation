@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var cat Models.Cat
 var o Models.Ordinateur
 
 func PostOrdinateur(c *gin.Context) {

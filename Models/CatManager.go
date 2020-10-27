@@ -38,3 +38,12 @@ func (c *Cat) Delete() error {
 	}
 	return nil
 }
+
+func (c *Cat) Update(typeCat, model string) {
+	if typeCat != "" {
+		c.Type = typeCat
+	}
+	if model != "" {
+		c.Models = model
+	}
+}

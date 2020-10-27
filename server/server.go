@@ -11,8 +11,8 @@ var r = gin.Default()
 func Server() {
 	//r.Static("/assets", "./assets")
 
-	r.GET("/test", Controller.Test)
-	ordinateur := r.Group("/ordinateur")
+	//r.GET("/test", Controller.Test)
+	ordinateur := r.Group("/ordinateurs")
 	{
 		ordinateur.GET("", Controller.GetAllOrdinateur)
 		ordinateur.GET("/:id", Controller.GetOrdinateur)
@@ -21,7 +21,7 @@ func Server() {
 		ordinateur.PUT("/:id", Controller.UpdateOrdinateur)
 	}
 
-	user := r.Group("/user")
+	user := r.Group("/users")
 	{
 		user.GET("", Controller.GetAllUser)
 		user.GET("/:id", Controller.GetUser)
@@ -46,6 +46,14 @@ func Server() {
 		application.POST("", Controller.PostApplication)
 		application.DELETE("/:id", Controller.DeleteApplication)
 		application.PUT("/:id", Controller.UpdateApplication)
+	}
+	cat := r.Group("/cats")
+	{
+		cat.GET("", Controller.GetAllCat)
+		cat.GET("/:id", Controller.GetCat)
+		cat.POST("", Controller.PostCat)
+		cat.DELETE("/:id", Controller.DeleteCat)
+		cat.PUT("/:id", Controller.UpdateCat)
 	}
 	servererr := r.Run()
 	if servererr != nil {
