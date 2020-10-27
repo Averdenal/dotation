@@ -1,7 +1,5 @@
 package Models
 
-import "fmt"
-
 func (a *Application) FindById(id string) error {
 	database.First(a, id)
 	err := database.Error
@@ -10,11 +8,9 @@ func (a *Application) FindById(id string) error {
 	}
 	return nil
 }
-func FindAllOordinateur() (a []Application, err error) {
-	result := database.Find(&a)
-	fmt.Println(result)
-	err = result.Error
-	return o, err
+func (a *Applications) FindAllApplication() error {
+	result := database.Find(&a.apps)
+	return result.Error
 }
 func (a *Application) FindByName(n string) error {
 	database.Where("name = ?", n).First(&a)
@@ -41,4 +37,12 @@ func (a *Application) Delete() error {
 		return err
 	}
 	return nil
+}
+func (a *Application) Update(nom, version string) {
+	if nom != "" {
+		a.Nom = nom
+	}
+	if version != "" {
+		a.Version = version
+	}
 }

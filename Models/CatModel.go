@@ -4,6 +4,9 @@ import "gorm.io/gorm"
 
 type Cat struct {
 	gorm.Model
-	Name   string
+	Type   string
 	Models string
+}
+type Cats struct {
+	Cats []Cat
 }

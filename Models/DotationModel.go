@@ -1,9 +1,9 @@
 package Models
 
 import (
-	"time"
+	"database/sql"
 )
 
 type Dotation struct {
-	Date time.Time
+	Date sql.NullTime
 }

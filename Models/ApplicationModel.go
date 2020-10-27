@@ -10,3 +10,7 @@ type Application struct {
 	Nom             string
 	Version         string
 }
+
+type Applications struct {
+	apps []Application
+}

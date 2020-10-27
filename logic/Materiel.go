@@ -1,23 +1,23 @@
 package logic
 
 import (
-	"time"
-
 	"github.com/Averdenal/Dotation/Models"
 )
 
 // CreatedMateriel Création de Mat
-func CreatedMateriel(tarif float32, nbSerial, nom, model string) (Models.Materiel, error) {
+func CreatedMateriel(tarif, nbSerial string, cat Models.Cat) (Models.Materiel, error) {
+	t, err := ValideTarif(&tarif)
+	if err != nil {
+
+	}
 	materiel := Models.Materiel{
-		Cat: Models.Cat{
-			Models: model,
-			Name:   nom,
-		},
-		Tarif:    tarif,
+		Cat:      cat,
+		Tarif:    t,
 		NbSerial: nbSerial,
-		Dotation: Models.Dotation{
-			Date: time.Now(),
-		},
 	}
 	return materiel, nil
+}
+
+func UpdateMateriel(m *Models.Materiel, tarif, nbSerial string, cat Models.Cat) {
+
 }

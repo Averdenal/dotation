@@ -14,6 +14,10 @@ type User struct {
 	pwd        string
 }
 
+type Users struct {
+	Users []User
+}
+
 func (r *User) AddOrdinateur(o *Ordinateur) {
 	r.Ordinateur = append(r.Ordinateur, *o)
 }

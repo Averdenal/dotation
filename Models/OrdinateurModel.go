@@ -20,6 +20,10 @@ type Ordinateur struct {
 	Applications []Application `gorm:"foreignKey:OrdinateurRefer"`
 }
 
+type Ordinateurs struct {
+	Ordinateurs []Ordinateur
+}
+
 func (o *Ordinateur) AddApplication(a *Application) {
 	o.Applications = append(o.Applications, *a)
 }

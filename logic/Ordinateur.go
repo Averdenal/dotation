@@ -1,15 +1,14 @@
 package logic
 
 import (
+	"database/sql"
 	"fmt"
-	"strconv"
-	"time"
-
 	"github.com/Averdenal/Dotation/Models"
+	"strconv"
 )
 
 //AddOrdinateur ajoute un ordi au client
-func CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbserial, modelOrdinateur, tarif string) (Models.Ordinateur, error) {
+func CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbserial, tarif string, cat Models.Cat) (Models.Ordinateur, error) {
 	s, err := strconv.ParseFloat(tarif, 32)
 	if err != nil {
 		return Models.Ordinateur{}, err
@@ -19,21 +18,17 @@ func CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbserial, modelOrdinateu
 		Name:        nameOrdinateur,
 		CodeExpress: codeExpress,
 		Os:          os,
-
-		Cat: Models.Cat{
-			Name:   "Ordinateur",
-			Models: modelOrdinateur,
-		},
-		Tarif:    s,
-		NbSerial: nbserial,
+		Cat:         cat,
+		Tarif:       s,
+		NbSerial:    nbserial,
 		Dotation: Models.Dotation{
-			Date: time.Now(),
+			Date: sql.NullTime{Valid: false},
 		},
 	}
 	return ordinateur, nil
 }
 
-func UpdateOrdinateur(o *Models.Ordinateur, nameOrdinateur, codeExpress, os, nbserial, modelOrdinateur, tarif string) error {
+func UpdateOrdinateur(o *Models.Ordinateur, nameOrdinateur, codeExpress, os, nbserial, tarif string) error {
 
 	if nameOrdinateur != "" {
 		o.Name = nameOrdinateur
@@ -51,19 +46,15 @@ func UpdateOrdinateur(o *Models.Ordinateur, nameOrdinateur, codeExpress, os, nbs
 		o.NbSerial = nbserial
 	}
 
-	if modelOrdinateur != "" {
-		o.Cat.Models = modelOrdinateur
-	}
-
 	if tarif != "" {
-		t, _ := valideTarif(&tarif)
+		t, _ := ValideTarif(&tarif)
 		o.Tarif = t
 	}
 
 	return nil
 }
 
-func valideTarif(tarif *string) (float64, error) {
+func ValideTarif(tarif *string) (float64, error) {
 	t, err := strconv.ParseFloat(*tarif, 64)
 	if err != nil {
 		return -1, err

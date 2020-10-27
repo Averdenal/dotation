@@ -8,10 +8,9 @@ func (m *Materiel) FindById(id string) error {
 	}
 	return nil
 }
-func FindAllCat() (c []Car, err error) {
-	result := database.Find(&m)
-	err = result.Error
-	return c, err
+func (m *Materiels) FindAllMateriel() error {
+	result := database.Find(&m.Materiels)
+	return result.Error
 }
 func (m *Materiel) FindByName(n string) error {
 	database.Where("name = ?", n).First(&m)

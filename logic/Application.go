@@ -12,3 +12,14 @@ func CreatedApplication(nom, version string) (Models.Application, error) {
 	}
 	return app, nil
 }
+
+func UpdateApplication(nom, version string, app Models.Application) Models.Application {
+	if nom != "" {
+		app.Nom = nom
+	}
+	if version != "" {
+		app.Version = version
+	}
+
+	return app
+}

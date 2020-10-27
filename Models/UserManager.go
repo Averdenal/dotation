@@ -1,7 +1,5 @@
 package Models
 
-import "fmt"
-
 func (u *User) FindById(id string) error {
 	database.First(u, id)
 	err := database.Error
@@ -10,11 +8,9 @@ func (u *User) FindById(id string) error {
 	}
 	return nil
 }
-func FindAllOordinateur() (u []User, err error) {
-	result := database.Find(&o)
-	fmt.Println(result)
-	err = result.Error
-	return o, err
+func (u *Users) FindAllUser() error {
+	result := database.Find(&u.Users)
+	return result.Error
 }
 func (u *User) FindByName(n string) error {
 	database.Where("name = ?", n).First(&u)

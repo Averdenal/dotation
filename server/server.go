@@ -9,10 +9,9 @@ var r = gin.Default()
 
 //Server API
 func Server() {
-	r.Static("/assets", "./assets")
+	//r.Static("/assets", "./assets")
 
-	r.GET("/", Controller.Home)
-
+	r.GET("/test", Controller.Test)
 	ordinateur := r.Group("/ordinateur")
 	{
 		ordinateur.GET("", Controller.GetAllOrdinateur)
@@ -40,13 +39,16 @@ func Server() {
 		materiel.PUT("/:id", Controller.UpdateMateriel)
 	}
 
-	/*application := r.Group("/materiels")
+	application := r.Group("/applications")
 	{
-		application.GET("", Controller.NewUser)
-		application.GET("/:id", Controller.NewUser)
-		application.POST("", Controller.NewUser)
-		application.DELETE("/:id", Controller.NewUser)
-		application.PUT("/:id", Controller.NewUser)
-	}*/
-	r.Run()
+		application.GET("", Controller.GetAllApplication)
+		application.GET("/:id", Controller.GetApplication)
+		application.POST("", Controller.PostApplication)
+		application.DELETE("/:id", Controller.DeleteApplication)
+		application.PUT("/:id", Controller.UpdateApplication)
+	}
+	servererr := r.Run()
+	if servererr != nil {
+		panic(servererr)
+	}
 }
