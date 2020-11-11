@@ -1,17 +1,25 @@
 package Models
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"gorm.io/gorm"
 )
 
 type User struct {
 	gorm.Model
-	Nom        string
-	Prenom     string
-	Service    string
-	Ordinateur []Ordinateur `gorm:"foreignKey:UserRefer"`
-	Materiel   []Materiel   `gorm:"foreignKey:UserRefer"`
-	pwd        string
+	Email        string
+	Nom          string
+	Prenom       string
+	ServiceRefer int
+	Service      Service      `gorm:"foreignKey:ServiceRefer"`
+	Ordinateur   []Ordinateur `gorm:"foreignKey:UserRefer"`
+	Materiel     []Materiel   `gorm:"foreignKey:UserRefer"`
+	Pwd          string
+}
+type Claims struct {
+	IdUser   uint   `json:"id_user"`
+	Username string `json:"username"`
+	jwt.StandardClaims
 }
 
 type Users struct {

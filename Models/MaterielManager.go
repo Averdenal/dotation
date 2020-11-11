@@ -1,7 +1,7 @@
 package Models
 
-func (m *Materiel) FindById(id string) error {
-	database.First(m, id)
+func (r *Materiel) FindById(id string) error {
+	database.First(r, id)
 	err := database.Error
 	if err != nil {
 		return err
@@ -12,8 +12,8 @@ func (m *Materiels) FindAllMateriel() error {
 	result := database.Find(&m.Materiels)
 	return result.Error
 }
-func (m *Materiel) FindByName(n string) error {
-	database.Where("name = ?", n).First(&m)
+func (r *Materiel) FindByName(n string) error {
+	database.Where("name = ?", n).First(&r)
 	err := database.Error
 	if err != nil {
 		return err
@@ -21,8 +21,8 @@ func (m *Materiel) FindByName(n string) error {
 	return nil
 }
 
-func (m *Materiel) Saver() error {
-	database.Save(m)
+func (r *Materiel) Saver() error {
+	database.Save(r)
 	err := database.Error
 	if err != nil {
 		return err
@@ -30,8 +30,8 @@ func (m *Materiel) Saver() error {
 	return nil
 }
 
-func (m *Materiel) Delete() error {
-	database.Delete(&m)
+func (r *Materiel) Delete() error {
+	database.Delete(&r)
 	err := database.Error
 	if err != nil {
 		return err

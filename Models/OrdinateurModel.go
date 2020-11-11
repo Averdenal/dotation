@@ -24,6 +24,11 @@ type Ordinateurs struct {
 	Ordinateurs []Ordinateur
 }
 
+type OrdinateurInterface interface {
+	AddApplication()
+	Upper()
+}
+
 func (o *Ordinateur) AddApplication(a *Application) {
 	o.Applications = append(o.Applications, *a)
 }

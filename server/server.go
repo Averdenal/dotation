@@ -2,17 +2,49 @@ package server
 
 import (
 	"github.com/Averdenal/Dotation/Controller"
+	"github.com/Averdenal/Dotation/logic"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 var r = gin.Default()
 
+func CORS() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+		c.Next()
+	}
+}
+
 //Server API
 func Server() {
-	//r.Static("/assets", "./assets")
 
-	//r.GET("/test", Controller.Test)
-	ordinateur := r.Group("/ordinateurs")
+	security := r.Group("")
+	{
+		security.POST("/register", CORS(), Controller.Register)
+		security.POST("/login", CORS(), Controller.Login)
+		security.GET("/Welcome", CORS(), Controller.Welcome)
+	}
+
+	service := r.Group("/services")
+	service.Use(CORS(), logic.Access())
+	{
+		service.GET("", Controller.GetAllService)
+		//service.GET("/:id", Controller.GetOrdinateur)
+		//service.POST("", Controller.PostOrdinateur)
+		//service.DELETE("/:id", Controller.DeleteOrdinateur)
+		//service.PUT("/:id", Controller.UpdateOrdinateur)
+	}
+
+	ordinateur := r.Group("/ordinateurs ")
 	{
 		ordinateur.GET("", Controller.GetAllOrdinateur)
 		ordinateur.GET("/:id", Controller.GetOrdinateur)
@@ -55,6 +87,13 @@ func Server() {
 		cat.DELETE("/:id", Controller.DeleteCat)
 		cat.PUT("/:id", Controller.UpdateCat)
 	}
+
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	config.AllowCredentials = true
+
+	r.Use(cors.New(config))
+
 	servererr := r.Run()
 	if servererr != nil {
 		panic(servererr)
