@@ -10,10 +10,27 @@ import (
 	"net/http"
 )
 
-func Register(c *gin.Context) {
-	var user Models.User
+type credsuser struct {
+	Email   string
+	Prenom  string
+	Nom     string
+	Pwd     string
+	Service string
+}
 
-	err := json.NewDecoder(c.Request.Body).Decode(&user)
+func Register(c *gin.Context) {
+	var credsuser credsuser
+	var service Models.Service
+
+	err := json.NewDecoder(c.Request.Body).Decode(&credsuser)
+	service.FindById(credsuser.Service)
+	user := Models.User{
+		Nom:     credsuser.Nom,
+		Prenom:  credsuser.Prenom,
+		Service: service,
+		Email:   credsuser.Email,
+		Pwd:     credsuser.Pwd,
+	}
 	if err != nil {
 		c.JSON(400, err)
 		return
@@ -29,7 +46,6 @@ func Register(c *gin.Context) {
 func Login(c *gin.Context) {
 	var creds Models.Credentials
 	err := json.NewDecoder(c.Request.Body).Decode(&creds)
-	fmt.Println(creds)
 	if err != nil {
 		c.JSON(403, gin.H{
 			"err": "err creds",

@@ -2,7 +2,6 @@ package server
 
 import (
 	"github.com/Averdenal/Dotation/Controller"
-	"github.com/Averdenal/Dotation/logic"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -35,7 +34,7 @@ func Server() {
 	}
 
 	service := r.Group("/services")
-	service.Use(CORS(), logic.Access())
+	service.Use(CORS())
 	{
 		service.GET("", Controller.GetAllService)
 		//service.GET("/:id", Controller.GetOrdinateur)
@@ -44,7 +43,7 @@ func Server() {
 		//service.PUT("/:id", Controller.UpdateOrdinateur)
 	}
 
-	ordinateur := r.Group("/ordinateurs ")
+	ordinateur := r.Group("/ordinateurs")
 	{
 		ordinateur.GET("", Controller.GetAllOrdinateur)
 		ordinateur.GET("/:id", Controller.GetOrdinateur)
