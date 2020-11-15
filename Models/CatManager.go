@@ -1,42 +1,21 @@
 package Models
 
 func (c *Cat) FindById(id string) error {
-	database.First(c, id)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.First(c, id).Error
 }
 func (c *Cats) FindAllCat() error {
-	result := database.Find(&c.Cats)
-	return result.Error
+	return database.Find(&c.Cats).Error
 }
 func (c *Cat) FindByName(n string) error {
-	database.Where("name = ?", n).First(&c)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.Where("name = ?", n).First(&c).Error
 }
 
 func (c *Cat) Saver() error {
-	database.Save(c)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.Save(c).Error
 }
 
 func (c *Cat) Delete() error {
-	database.Delete(&c)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.Delete(&c).Error
 }
 
 func (c *Cat) Update(typeCat, model string) {

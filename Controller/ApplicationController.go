@@ -20,6 +20,7 @@ func GetAllApplication(c *gin.Context) {
 
 func GetApplication(c *gin.Context) {
 	id := c.Param("id")
+
 	err := app.FindById(id)
 	if err != nil {
 		c.JSON(404, err)

@@ -7,53 +7,22 @@ import (
 )
 
 func (r *User) FindByEmail(email string) error {
-	err := database.Where("email = ?", email).First(r).Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.Where("email = ?", email).First(r).Error
 }
 
 func (r *User) FindById(id string) error {
-	err := database.First(r, id).Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.First(r, id).Error
 }
 func (u *Users) FindAllUser() error {
-	err := database.Find(&u.Users).Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.Find(&u.Users).Error
 }
 func (r *User) FindByName(n string) error {
-	database.Where("name = ?", n).First(&r)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.Where("name = ?", n).First(&r).Error
 }
 
-func (r *User) Saver() error {
-	database.Save(r)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
-}
+func (r *User) Saver() error { return database.Save(r).Error }
 
-func (r *User) Delete() error {
-	database.Delete(&r)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
-}
+func (r *User) Delete() error { return database.Delete(&r).Error }
 
 var JwtKey = []byte("my_secret_key")
 

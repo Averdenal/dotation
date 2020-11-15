@@ -1,42 +1,22 @@
 package Models
 
 func (a *Application) FindById(id string) error {
-	database.First(a, id)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.First(a, id).Error
+
 }
 func (a *Applications) FindAllApplication() error {
-	result := database.Find(&a.apps)
-	return result.Error
+	return database.Find(&a.apps).Error
 }
 func (a *Application) FindByName(n string) error {
-	database.Where("name = ?", n).First(&a)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.Where("name = ?", n).First(&a).Error
 }
 
 func (a *Application) Saver() error {
-	database.Save(a)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.Save(a).Error
 }
 
 func (a *Application) Delete() error {
-	database.Delete(&a)
-	err := database.Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return database.Delete(&a).Error
 }
 func (a *Application) Update(nom, version string) {
 	if nom != "" {

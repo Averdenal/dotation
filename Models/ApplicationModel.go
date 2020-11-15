@@ -12,6 +12,10 @@ type Application struct {
 	Version         string
 }
 
+func (a *Application) FindAll() error {
+	panic("implement me")
+}
+
 type Applications struct {
 	apps []Application
 }
