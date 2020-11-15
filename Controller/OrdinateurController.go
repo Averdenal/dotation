@@ -1,29 +1,25 @@
 package Controller
 
 import (
-	"fmt"
+	"encoding/json"
 	"github.com/Averdenal/Dotation/Models"
 	"github.com/Averdenal/Dotation/logic"
 	"github.com/gin-gonic/gin"
 )
 
-var o Models.Ordinateur
-
 func PostOrdinateur(c *gin.Context) {
-	nameOrdinateur := c.PostForm("nameOrdinateur")
-	codeExpress := c.PostForm("codeExpress")
-	os := c.PostForm("os")
-	nbSerial := c.PostForm("nbSerial")
-	idcat := c.PostForm("idCat")
-	tarif := c.PostForm("tarif")
-
-	_ = cat.FindById(idcat)
-	o, _ := logic.CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbSerial, tarif, cat)
-	fmt.Println(o)
-	err := o.Saver()
+	var creds Models.CredsOrdinateur
+	var o Models.Ordinateur
+	err := json.NewDecoder(c.Request.Body).Decode(&creds)
 	if err != nil {
+		c.AbortWithStatusJSON(400, creds)
+	}
+
+	_ = o.Created(creds)
+	errSaver := o.Saver()
+	if errSaver != nil {
 		c.JSON(503, gin.H{
-			"err": err,
+			"err": errSaver,
 		})
 		return
 	}
@@ -32,10 +28,10 @@ func PostOrdinateur(c *gin.Context) {
 }
 
 func UpdateOrdinateur(c *gin.Context) {
+	var o Models.Ordinateur
 	id := c.Param("id")
 	nameOrdianteur := c.PostForm("nameOrdinateur")
 	codeExpress := c.PostForm("codeExpress")
-	os := c.PostForm("os")
 	nbSerial := c.PostForm("nbSerial")
 	idcat := c.PostForm("idcat")
 	tarif := c.PostForm("tarif")
@@ -49,7 +45,7 @@ func UpdateOrdinateur(c *gin.Context) {
 		return
 	}
 
-	err := logic.UpdateOrdinateur(&o, nameOrdianteur, codeExpress, os, nbSerial, tarif)
+	err := logic.UpdateOrdinateur(&o, nameOrdianteur, codeExpress, nbSerial, tarif)
 	if err != nil {
 		c.JSON(503, gin.H{
 			"err": "error logic de modification",

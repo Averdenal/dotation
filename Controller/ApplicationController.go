@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var apps Models.Applications
 var app Models.Application
 
 func GetAllApplication(c *gin.Context) {
+	var apps Models.Applications
 	err := apps.FindAllApplication()
 	if err != nil {
 		c.JSON(503, err)

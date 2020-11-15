@@ -1,34 +1,11 @@
 package logic
 
 import (
-	"database/sql"
-	"fmt"
 	"github.com/Averdenal/Dotation/Models"
 	"strconv"
 )
 
-//AddOrdinateur ajoute un ordi au client
-func CreatedOrdinateur(nameOrdinateur, codeExpress, os, nbserial, tarif string, cat Models.Cat) (Models.Ordinateur, error) {
-	s, err := strconv.ParseFloat(tarif, 32)
-	if err != nil {
-		return Models.Ordinateur{}, err
-	}
-	fmt.Println(nameOrdinateur)
-	ordinateur := Models.Ordinateur{
-		Name:        nameOrdinateur,
-		CodeExpress: codeExpress,
-		Os:          os,
-		Cat:         cat,
-		Tarif:       s,
-		NbSerial:    nbserial,
-		Dotation: Models.Dotation{
-			Date: sql.NullTime{Valid: false},
-		},
-	}
-	return ordinateur, nil
-}
-
-func UpdateOrdinateur(o *Models.Ordinateur, nameOrdinateur, codeExpress, os, nbserial, tarif string) error {
+func UpdateOrdinateur(o *Models.Ordinateur, nameOrdinateur, codeExpress, nbserial, tarif string) error {
 
 	if nameOrdinateur != "" {
 		o.Name = nameOrdinateur
@@ -37,11 +14,6 @@ func UpdateOrdinateur(o *Models.Ordinateur, nameOrdinateur, codeExpress, os, nbs
 	if codeExpress != "" {
 		o.CodeExpress = codeExpress
 	}
-
-	if os != "" {
-		o.Os = os
-	}
-
 	if nbserial != "" {
 		o.NbSerial = nbserial
 	}

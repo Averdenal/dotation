@@ -14,5 +14,6 @@ func main() {
 	data.AutoMigrate(&Models.Materiel{})
 	data.AutoMigrate(&Models.Ordinateur{})
 	data.AutoMigrate(&Models.Service{})
+	data.AutoMigrate(&Models.Role{})
 	server.Server()
 }

@@ -11,6 +11,7 @@ type User struct {
 	Nom          string
 	Prenom       string
 	ServiceRefer int
+	Role         []*Role      `gorm:"many2many:user_role;"`
 	Service      Service      `gorm:"foreignKey:ServiceRefer"`
 	Ordinateur   []Ordinateur `gorm:"foreignKey:UserRefer"`
 	Materiel     []Materiel   `gorm:"foreignKey:UserRefer"`
@@ -32,4 +33,7 @@ func (r *User) AddOrdinateur(o *Ordinateur) {
 
 func (r *User) AddMateriel(m *Materiel) {
 	r.Materiel = append(r.Materiel, *m)
+}
+func (u *User) AddRole(r *Role) {
+	u.Role = append(u.Role, r)
 }

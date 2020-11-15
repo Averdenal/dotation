@@ -1,20 +1,18 @@
 package Models
 
 func (o *Ordinateur) FindById(id string) error {
-	database.First(o, id)
-	err := database.Error
+	err := database.First(o, id).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 func (o *Ordinateurs) FindAllOrdinateur() error {
-	result := database.Find(&o.Ordinateurs)
-	return result.Error
+	err := database.Find(&o.Ordinateurs).Error
+	return err
 }
 func (o *Ordinateur) FindByName(n string) error {
-	database.Where("name = ?", n).First(&o)
-	err := database.Error
+	err := database.Where("name = ?", n).First(&o).Error
 	if err != nil {
 		return err
 	}
@@ -23,8 +21,7 @@ func (o *Ordinateur) FindByName(n string) error {
 
 func (o *Ordinateur) Saver() error {
 	o.Upper()
-	database.Save(o)
-	err := database.Error
+	err := database.Save(o).Error
 	if err != nil {
 		return err
 	}
@@ -32,8 +29,7 @@ func (o *Ordinateur) Saver() error {
 }
 
 func (o *Ordinateur) Delete() error {
-	database.Delete(&o)
-	err := database.Error
+	err := database.Delete(&o).Error
 	if err != nil {
 		return err
 	}
