@@ -26,21 +26,21 @@ func (r *User) Delete() error { return database.Delete(&r).Error }
 
 var JwtKey = []byte("my_secret_key")
 
-func (u *User) BcryptPassWord() {
-	pwd, _ := bcrypt.GenerateFromPassword([]byte(u.Pwd), 14)
-	u.Pwd = string(pwd)
+func (r *User) BcryptPassWord() {
+	pwd, _ := bcrypt.GenerateFromPassword([]byte(r.Pwd), 14)
+	r.Pwd = string(pwd)
 }
 
-func (u *User) CheckPasswordHash(password string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(u.Pwd), []byte(password))
+func (r *User) CheckPasswordHash(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(r.Pwd), []byte(password))
 	return err != nil
 }
-func (u *User) CreatedToken(creds Credentials) (string, error, time.Time) {
+func (r *User) CreatedToken(creds Credentials) (string, error, time.Time) {
 
 	expirationTime := time.Now().Add(60 * time.Minute)
 	// Create the JWT claims, which includes the username and expiry time
 	claims := &Claims{
-		IdUser:   u.ID,
+		IdUser:   r.ID,
 		Username: creds.Username,
 		StandardClaims: jwt.StandardClaims{
 			// In JWT, the expiry time is expressed as unix milliseconds

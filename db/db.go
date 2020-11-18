@@ -1,11 +1,15 @@
 package db
 
 import (
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 func DbConnnect() *gorm.DB {
-	db, _ := gorm.Open(sqlite.Open("./test.db"), &gorm.Config{})
+	dsn := "root:root@tcp(localhost:3307)/test?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
 	return db
 }

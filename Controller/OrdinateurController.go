@@ -29,14 +29,14 @@ func PostOrdinateur(c *gin.Context) {
 
 func UpdateOrdinateur(c *gin.Context) {
 	var o Models.Ordinateur
+	var creds Models.CredsOrdinateur
 	id := c.Param("id")
-	nameOrdianteur := c.PostForm("nameOrdinateur")
-	codeExpress := c.PostForm("codeExpress")
-	nbSerial := c.PostForm("nbSerial")
-	idcat := c.PostForm("idcat")
-	tarif := c.PostForm("tarif")
+	err := json.NewDecoder(c.Request.Body).Decode(&creds)
+	if err != nil {
+		c.AbortWithStatusJSON(400, creds)
+	}
 
-	_ = cat.FindById(idcat)
+	_ = cat.FindById(creds.Idcat)
 	finderr := o.FindById(id)
 	if finderr != nil {
 		c.JSON(503, gin.H{
@@ -45,15 +45,15 @@ func UpdateOrdinateur(c *gin.Context) {
 		return
 	}
 
-	err := logic.UpdateOrdinateur(&o, nameOrdianteur, codeExpress, nbSerial, tarif)
-	if err != nil {
+	errUpdate := logic.UpdateOrdinateur(&o, creds)
+	if errUpdate != nil {
 		c.JSON(503, gin.H{
 			"err": "error logic de modification",
 		})
 		return
 	}
 	saverErr := o.Saver()
-	if finderr != nil {
+	if saverErr != nil {
 		c.JSON(503, gin.H{
 			"err": saverErr,
 		})

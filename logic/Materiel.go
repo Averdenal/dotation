@@ -6,7 +6,7 @@ import (
 
 // CreatedMateriel Création de Mat
 func CreatedMateriel(tarif, nbSerial string, cat Models.Cat) (Models.Materiel, error) {
-	t, err := ValideTarif(&tarif)
+	t, err := ValideTarif(tarif)
 	if err != nil {
 
 	}

@@ -15,7 +15,7 @@ type User struct {
 	Service      Service      `gorm:"foreignKey:ServiceRefer"`
 	Ordinateur   []Ordinateur `gorm:"foreignKey:UserRefer"`
 	Materiel     []Materiel   `gorm:"foreignKey:UserRefer"`
-	Pwd          string
+	Pwd          string       `json:"-"`
 }
 type Claims struct {
 	IdUser   uint   `json:"id_user"`

@@ -5,29 +5,28 @@ import (
 	"strconv"
 )
 
-func UpdateOrdinateur(o *Models.Ordinateur, nameOrdinateur, codeExpress, nbserial, tarif string) error {
+func UpdateOrdinateur(o *Models.Ordinateur, creds Models.CredsOrdinateur) error {
 
-	if nameOrdinateur != "" {
-		o.Name = nameOrdinateur
+	if creds.NameOrdinateur != "" {
+		o.Name = creds.NameOrdinateur
 	}
 
-	if codeExpress != "" {
-		o.CodeExpress = codeExpress
+	if creds.Codeexpress != "" {
+		o.CodeExpress = creds.Codeexpress
 	}
-	if nbserial != "" {
-		o.NbSerial = nbserial
+	if creds.Nbserial != "" {
+		o.NbSerial = creds.Nbserial
 	}
 
-	if tarif != "" {
-		t, _ := ValideTarif(&tarif)
-		o.Tarif = t
+	if creds.Tarif != "" {
+		o.Tarif, _ = ValideTarif(creds.Tarif)
 	}
 
 	return nil
 }
 
-func ValideTarif(tarif *string) (float64, error) {
-	t, err := strconv.ParseFloat(*tarif, 64)
+func ValideTarif(tarif string) (float64, error) {
+	t, err := strconv.ParseFloat(tarif, 64)
 	if err != nil {
 		return -1, err
 	}

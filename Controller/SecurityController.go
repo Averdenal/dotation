@@ -23,7 +23,9 @@ func Register(c *gin.Context) {
 	var service Models.Service
 
 	err := json.NewDecoder(c.Request.Body).Decode(&credsuser)
-	service.FindById(credsuser.Service)
+	if credsuser.Service != "" {
+		_ = service.FindById(credsuser.Service)
+	}
 	user := Models.User{
 		Nom:     credsuser.Nom,
 		Prenom:  credsuser.Prenom,
