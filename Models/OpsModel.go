@@ -1,6 +1,8 @@
 package Models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Ops struct {
 	gorm.Model
@@ -10,4 +12,8 @@ type Ops struct {
 
 type Opss struct {
 	Ops []Ops
+}
+type CredsOs struct {
+	Name    string
+	Version string
 }

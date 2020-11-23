@@ -6,6 +6,6 @@ func (r *Ops) FindById(id string) error {
 func (r *Ops) Saver() error {
 	return database.Save(r).Error
 }
-func (r *Opss) name() error {
-	return database.Find(r).Error
+func (r *Opss) FindAllOs() error {
+	return database.Find(&r.Ops).Error
 }

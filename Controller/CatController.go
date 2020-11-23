@@ -15,7 +15,7 @@ func GetAllCat(c *gin.Context) {
 		c.JSON(503, err)
 		return
 	}
-	c.JSON(200, cats)
+	c.JSON(200, cats.Cats)
 }
 
 func GetCat(c *gin.Context) {

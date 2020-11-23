@@ -37,10 +37,6 @@ func Server() {
 	service.Use(CORS())
 	{
 		service.GET("", Controller.GetAllService)
-		//service.GET("/:id", Controller.GetOrdinateur)
-		//service.POST("", Controller.PostOrdinateur)
-		//service.DELETE("/:id", Controller.DeleteOrdinateur)
-		//service.PUT("/:id", Controller.UpdateOrdinateur)
 	}
 
 	ordinateur := r.Group("/ordinateurs")
@@ -78,13 +74,21 @@ func Server() {
 		application.DELETE("/:id", Controller.DeleteApplication)
 		application.PUT("/:id", Controller.UpdateApplication)
 	}
+
 	cat := r.Group("/cats")
+	cat.Use(CORS())
 	{
 		cat.GET("", Controller.GetAllCat)
 		cat.GET("/:id", Controller.GetCat)
 		cat.POST("", Controller.PostCat)
 		cat.DELETE("/:id", Controller.DeleteCat)
 		cat.PUT("/:id", Controller.UpdateCat)
+	}
+	os := r.Group("/Os")
+	os.Use(CORS())
+	{
+		os.GET("", Controller.GetAllOs)
+		os.POST("", Controller.PostOs)
 	}
 
 	config := cors.DefaultConfig()
