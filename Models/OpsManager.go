@@ -9,3 +9,6 @@ func (r *Ops) Saver() error {
 func (r *Opss) FindAllOs() error {
 	return database.Find(&r.Ops).Error
 }
+func (r *Ops) Delete() error {
+	return database.Delete(&r).Error
+}

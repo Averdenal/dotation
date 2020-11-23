@@ -88,7 +88,10 @@ func Server() {
 	os.Use(CORS())
 	{
 		os.GET("", Controller.GetAllOs)
+		os.GET("/:id", Controller.GetOs)
 		os.POST("", Controller.PostOs)
+		os.PUT("/:id", Controller.UpdateOs)
+		os.DELETE("/:id", Controller.DeleteOs)
 	}
 
 	config := cors.DefaultConfig()
